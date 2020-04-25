@@ -1,0 +1,8 @@
+<ul>
+  <li *ngFor="let item of todoList">
+    <span>UID: {{ item.userId | number: "2.0-0" }} | </span>
+    <span>ID: {{ item.id | number: "3.0-0" }} | </span>
+    <span>Title: {{ item.title }} | </span>
+    <input type="checkbox" [(ngModel)]="item.completed" />
+  </li>
+</ul>
