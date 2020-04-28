@@ -67,8 +67,6 @@ export class TodosStoreService {
     const todo = this.todos.find((t) => t.id === id);
 
     if (todo) {
-      todo.completed = !todo.completed;
-
       try {
         await this.todosService.toggle(id, completed).toPromise();
       } catch (e) {
