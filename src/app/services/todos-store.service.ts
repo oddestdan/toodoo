@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 
 import Todo from 'src/app/models/todo.model';
@@ -12,7 +12,9 @@ import { TodosService } from 'src/app/services/todos.service';
 export class TodosStoreService {
   private readonly _todos = new BehaviorSubject<ITodo[]>([]);
 
-  readonly todos$ = this._todos.asObservable();
+  // readonly todos$ = this._todos.asObservable();
+  readonly todos$ = this._todos;
+  // readonly todos$: Observable<ITodo[]> = this._todos;
 
   get todos(): ITodo[] {
     return this._todos.getValue();
@@ -25,55 +27,66 @@ export class TodosStoreService {
     this.fetchAll();
   }
 
-  async fetchAll() {
-    this.todos = await this.todosService.getAll().toPromise();
+  fetchAll() {
+    this.todosService.getAll().subscribe((data) => {
+      this.todos = data;
+    });
   }
 
-  async add(title: string) {
+  // Optimistic CRUD actions on UI side:
+  // - If user tries to add, delete, ... a Todo, they should
+  // immediately see the result, while server processes the query.
+  // - And if server's response has an error, we reroll UI state back
+
+  add(title: string) {
+    // optimistically update UI-side state
     const optimisticTodo = new Todo(title);
     this.todos = [...this.todos, optimisticTodo];
 
-    try {
-      const todo = await this.todosService.create(optimisticTodo).toPromise();
+    // send request to the server
+    this.todosService.create(optimisticTodo).subscribe(
+      // sync UI and BE state
+      (todo: ITodo) => {
+        const index = this.todos.indexOf(
+          this.todos.find((t) => t.id === optimisticTodo.id)
+        );
 
-      const index = this.todos.indexOf(
-        this.todos.find((t) => t.id === optimisticTodo.id)
-      );
-
-      this.todos[index] = todo;
-    } catch (e) {
-      // if server returns an error -> revert the changes
-      console.error(e);
-      this.remove(optimisticTodo.id, false);
-    }
+        this.todos[index] = todo;
+      },
+      // revert the changes if BE returns an error
+      (error) => {
+        console.error(error);
+        this.remove(optimisticTodo.id, false);
+      }
+    );
   }
 
-  async remove(id: string, serverRemove = true) {
+  remove(id: string, serverRemove = true) {
     const todo = this.todos.find((t) => t.id === id);
     this.todos = this.todos.filter((t) => t.id !== id);
 
     if (serverRemove) {
-      try {
-        await this.todosService.remove(id).toPromise();
-      } catch (e) {
-        // if server returns an error -> revert the changes
-        console.error(e);
-        this.todos = [...this.todos, todo];
-      }
+      this.todosService.remove(id).subscribe(
+        () => {},
+        (error) => {
+          console.error(error);
+          this.todos = [...this.todos, todo];
+        }
+      );
     }
   }
 
-  async toggle(id: string, completed: boolean) {
+  toggle(id: string, completed: boolean) {
     const todo = this.todos.find((t) => t.id === id);
 
     if (todo) {
-      try {
-        await this.todosService.toggle(id, completed).toPromise();
-      } catch (e) {
-        // if server returns an error -> revert the changes
-        console.error(e);
-        todo.completed = !todo.completed;
-      }
+      this.todosService.toggle(id, completed).subscribe(
+        () => {},
+        (error) => {
+          console.error(error);
+          todo.completed = !todo.completed;
+        }
+      );
     }
   }
 }

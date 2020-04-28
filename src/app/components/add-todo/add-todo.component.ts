@@ -12,8 +12,8 @@ export class AddTodoComponent {
 
   constructor(private todosStore: TodosStoreService) {}
 
-  handleAddClick(): void {
-    this.todosStore.add(this.todoTitle);
-    this.todoTitle = '';
+  onSubmit(title: string) {
+    this.todosStore.add(title);
+    this.todoTitle = ''; // reset
   }
 }

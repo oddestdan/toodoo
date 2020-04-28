@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import ITodo from 'src/app/models/itodo';
+import ITodo from 'src/app/models/ITodo';
 import { API_URL } from 'src/app/constants';
 
 @Injectable({
