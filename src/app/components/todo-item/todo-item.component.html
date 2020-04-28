@@ -1,0 +1,9 @@
+<li>
+  <input
+    type="checkbox"
+    [(ngModel)]="todo.completed"
+    (change)="handleCompletedChange()"
+  />
+  <span>{{ todo.title }}</span>
+  <button (click)="handleRemoveClick()">x</button>
+</li>
