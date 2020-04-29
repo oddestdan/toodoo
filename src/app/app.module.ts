@@ -6,10 +6,13 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { TestTodoListComponent } from './test-todo-list/test-todo-list.component';
+
+import { AddTodoComponent } from './components/add-todo/add-todo.component';
+import { TodoListComponent } from './components/todo-list/todo-list.component';
+import { TodoItemComponent } from './components/todo-item/todo-item.component';
 
 @NgModule({
-  declarations: [AppComponent, TestTodoListComponent],
+  declarations: [AppComponent, AddTodoComponent, TodoListComponent, TodoItemComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

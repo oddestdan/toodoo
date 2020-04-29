@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 import ITodo from 'src/app/models/ITodo';
 import { API_URL } from 'src/app/constants';
@@ -11,7 +10,19 @@ import { API_URL } from 'src/app/constants';
 export class TodosService {
   constructor(private http: HttpClient) {}
 
-  getTodos(): Observable<Array<ITodo>> {
-    return this.http.get<Array<ITodo>>(API_URL);
+  getAll() {
+    return this.http.get<ITodo[]>(API_URL);
+  }
+
+  create(todo: ITodo) {
+    return this.http.post<ITodo>(`${API_URL}`, todo);
+  }
+
+  remove(id: string) {
+    return this.http.delete(`${API_URL}/${id}`);
+  }
+
+  toggle(id: string, completed: boolean) {
+    return this.http.put<ITodo>(`${API_URL}/${id}`, { completed });
   }
 }
