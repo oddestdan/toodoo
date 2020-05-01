@@ -1,9 +1,10 @@
-<form (ngSubmit)="onSubmit(todoTitle)">
+<form (ngSubmit)="onSubmit()" [formGroup]="addForm">
   <input
     type="text"
     name="title"
-    [(ngModel)]="todoTitle"
+    formControlName="title"
     placeholder="Todo Title..."
   />
+  <app-validator-message [field]="addForm.get('title')"></app-validator-message>
   <button type="submit">Add Todo</button>
 </form>

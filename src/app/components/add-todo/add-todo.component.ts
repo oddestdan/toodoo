@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { TodosStoreService } from 'src/app/services/todos-store.service';
+import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-todo',
@@ -8,12 +9,21 @@ import { TodosStoreService } from 'src/app/services/todos-store.service';
   styleUrls: ['./add-todo.component.scss'],
 })
 export class AddTodoComponent {
-  todoTitle = '';
+  addForm = this.fb.group({
+    title: ['', [Validators.maxLength(100), Validators.required]],
+  });
 
-  constructor(private todosStore: TodosStoreService) {}
+  constructor(private todosStore: TodosStoreService, private fb: FormBuilder) {}
 
-  onSubmit(title: string) {
+  onSubmit(): void {
+    const title = this.addForm.get('title').value;
     this.todosStore.add(title);
-    this.todoTitle = ''; // reset
+
+    this.resetForm();
+  }
+
+  resetForm(): void {
+    this.addForm.reset();
+    this.addForm.updateValueAndValidity();
   }
 }
