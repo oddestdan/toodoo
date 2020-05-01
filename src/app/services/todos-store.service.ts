@@ -10,11 +10,13 @@ import { TodosService } from 'src/app/services/todos.service';
   providedIn: 'root',
 })
 export class TodosStoreService {
+  // Create private stream source (can act both as Observable and Observer)
   private readonly _todos = new BehaviorSubject<ITodo[]>([]);
 
-  // readonly todos$ = this._todos.asObservable();
-  readonly todos$ = this._todos;
-  // readonly todos$: Observable<ITodo[]> = this._todos;
+  // Provide public sequence that references private subject,
+  // but prevent it from leaking the "observer side" of the subject.
+  // https://stackoverflow.com/questions/36986548/when-to-use-asobservable-in-rxjs
+  readonly todos$ = this._todos.asObservable();
 
   get todos(): ITodo[] {
     return this._todos.getValue();
