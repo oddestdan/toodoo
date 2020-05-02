@@ -11,9 +11,9 @@ import * as vMsg from 'src/app/constants/validationMessages';
 export class ValidatorMessageComponent {
   @Input() field: FormControl;
 
-  get validatorMessages() {
+  get validatorMessages(): string[] {
     if (!this.field || !this.field.errors) {
-      return false;
+      return [];
     }
 
     const validators = this.field.errors;
