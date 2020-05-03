@@ -18,6 +18,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -26,6 +31,7 @@ import { MatInputModule } from '@angular/material/input';
     TodoListComponent,
     TodoItemComponent,
     ValidatorMessageComponent,
+    NavigationComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,6 +45,10 @@ import { MatInputModule } from '@angular/material/input';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
