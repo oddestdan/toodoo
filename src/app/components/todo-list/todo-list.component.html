@@ -1,11 +1,9 @@
-<h3>TODO List:</h3>
-<button (click)="testLog()">Console log all todos</button>
-
-<ul>
+<ul class="todo-list">
   <app-todo-item
     *ngFor="let todo of todosStore.todos$ | async; trackBy: todosTrackFn"
     [todo]="todo"
     (toggle)="handleToggle(todo.id, $event)"
+    (edit)="handleEdit(todo.id, $event)"
     (remove)="handleRemove($event)"
   >
   </app-todo-item>

@@ -13,6 +13,12 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { ValidatorMessageComponent } from './components/validator-message/validator-message.component';
 
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +33,11 @@ import { ValidatorMessageComponent } from './components/validator-message/valida
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
     ReactiveFormsModule,
   ],
   providers: [],
