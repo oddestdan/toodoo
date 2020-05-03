@@ -17,6 +17,7 @@
   }
   &__edit {
     padding: 0 1rem;
-    border-bottom: 1px solid;
+    // border-bottom: 1px solid;
+    background-color: #eee; // TODO: get color from mat theming
   }
 }

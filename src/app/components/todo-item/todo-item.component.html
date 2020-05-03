@@ -14,9 +14,11 @@
     <div *ngIf="isEditing" class="todo-item__edit-container">
       <input
         matInput
+        #inputEl
         [(ngModel)]="todo.title"
         class="todo-item__edit"
         type="text"
+        (keyup.enter)="submitEdit()"
         (blur)="submitEdit()"
       />
       <button
@@ -29,7 +31,7 @@
     </div>
   </div>
 
-  <div class="todo-item__actions">
+  <div class="todo-item__actions" *ngIf="!isEditing">
     <button
       mat-icon-button
       (click)="handleEdit()"

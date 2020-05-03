@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 
 import ITodo from 'src/app/models/itodo';
 
@@ -13,6 +20,8 @@ export class TodoItemComponent {
   @Output() edit = new EventEmitter<ITodo>();
   @Output() remove = new EventEmitter<string>();
 
+  @ViewChild('inputEl') private inputEl: ElementRef;
+
   oldTodo: ITodo; // backup Todo in case of server errors
   isEditing = false;
 
@@ -23,6 +32,8 @@ export class TodoItemComponent {
   handleEdit(): void {
     this.isEditing = true;
     this.oldTodo = { ...this.todo }; // save in case of server errors
+
+    setTimeout(() => this.inputEl.nativeElement.focus());
   }
 
   submitEdit(): void {
