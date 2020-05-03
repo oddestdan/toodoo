@@ -22,6 +22,10 @@ export class TodosService {
     return this.http.delete(`${API_URL}/${id}`);
   }
 
+  edit(id: string, todo: ITodo) {
+    return this.http.put(`${API_URL}/${id}`, { ...todo });
+  }
+
   toggle(id: string, completed: boolean) {
     return this.http.put<ITodo>(`${API_URL}/${id}`, { completed });
   }

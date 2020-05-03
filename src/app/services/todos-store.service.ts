@@ -78,6 +78,19 @@ export class TodosStoreService {
     }
   }
 
+  edit(id: string, oldTodo: ITodo) {
+    const todoIndex = this.todos.findIndex((t) => t.id === id);
+    const editedTodo = this.todos[todoIndex];
+
+    this.todosService.edit(id, editedTodo).subscribe(
+      () => {},
+      (error) => {
+        console.error(error);
+        this.todos[todoIndex] = oldTodo;
+      }
+    );
+  }
+
   toggle(id: string, completed: boolean) {
     const todo = this.todos.find((t) => t.id === id);
 

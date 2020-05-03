@@ -10,19 +10,19 @@ import { TodosStoreService } from 'src/app/services/todos-store.service';
 })
 export class TodoListComponent {
   // optimization to rerender only todos that change
-  todosTrackFn = (i: string, todo: ITodo) => todo.id;
+  todosTrackFn = (i: string, todo: ITodo): string => todo.id;
 
   constructor(public todosStore: TodosStoreService) {}
 
-  testLog() {
-    console.log(this.todosStore.todos);
-  }
-
-  handleToggle(id: string, completed: boolean) {
+  handleToggle(id: string, completed: boolean): void {
     this.todosStore.toggle(id, completed);
   }
 
-  handleRemove(id: string) {
+  handleEdit(id: string, oldTodo: ITodo): void {
+    this.todosStore.edit(id, oldTodo);
+  }
+
+  handleRemove(id: string): void {
     this.todosStore.remove(id);
   }
 }

@@ -1,9 +1,48 @@
-<li>
-  <input
-    type="checkbox"
+<li class="todo-item">
+  <mat-checkbox
+    class="todo-item__checkbox"
+    name="todo-completed"
+    ngDefaultControl
     [(ngModel)]="todo.completed"
     (change)="handleCompletedChange()"
-  />
-  <span>{{ todo.title }}</span>
-  <button (click)="handleRemoveClick()">x</button>
+  ></mat-checkbox>
+
+  <div class="todo-item__content">
+    <span *ngIf="!isEditing" (dblclick)="handleEdit()">
+      {{ todo.title }}
+    </span>
+    <div *ngIf="isEditing" class="todo-item__edit-container">
+      <input
+        matInput
+        [(ngModel)]="todo.title"
+        class="todo-item__edit"
+        type="text"
+        (blur)="submitEdit()"
+      />
+      <button
+        mat-icon-button
+        (click)="submitEdit()"
+        aria-label="accept todo edit change"
+      >
+        <mat-icon fontSet="material-icons-outlined">check</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="todo-item__actions">
+    <button
+      mat-icon-button
+      (click)="handleEdit()"
+      aria-label="edit todo button"
+    >
+      <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      (click)="handleRemoveClick()"
+      aria-label="remove todo button"
+    >
+      <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+    </button>
+  </div>
 </li>
