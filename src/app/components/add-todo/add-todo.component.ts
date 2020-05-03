@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Validators, FormBuilder, NgForm } from '@angular/forms';
 
 import { TodosStoreService } from 'src/app/services/todos-store.service';
-import { Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-todo',
@@ -9,6 +9,9 @@ import { Validators, FormBuilder } from '@angular/forms';
   styleUrls: ['./add-todo.component.scss'],
 })
 export class AddTodoComponent {
+  @ViewChild('formDir') private formDir: NgForm;
+  @ViewChild('inputEl') private inputEl: ElementRef;
+
   addForm = this.fb.group({
     title: ['', [Validators.maxLength(100), Validators.required]],
   });
@@ -23,7 +26,22 @@ export class AddTodoComponent {
   }
 
   resetForm(): void {
+    this.inputEl.nativeElement.blur();
+    this.formDir.resetForm();
+
     this.addForm.reset();
     this.addForm.updateValueAndValidity();
+
+    this.debugFormState();
+  }
+
+  // for debugging purposes only
+  debugFormState(): void {
+    console.log('FORM STATE...');
+    console.log('errors', this.addForm.errors);
+    console.log('valid', this.addForm.valid);
+    console.log('pristine', this.addForm.pristine);
+    console.log('touched', this.addForm.touched);
+    console.log('dirty', this.addForm.dirty);
   }
 }
