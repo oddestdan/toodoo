@@ -13,6 +13,8 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 import { TodoItemComponent } from './components/todo-item/todo-item.component';
 import { ValidatorMessageComponent } from './components/validator-message/validator-message.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
+import { SearchFilterPipe } from './pipes/search-filter.pipe';
+import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,6 +36,8 @@ import { NavListComponent } from './components/nav-list/nav-list.component';
     TodoItemComponent,
     ValidatorMessageComponent,
     NavigationComponent,
+    SearchFilterPipe,
+    SearchFilterComponent,
     NavListItemComponent,
     NavListComponent,
   ],

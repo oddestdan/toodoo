@@ -1,0 +1,7 @@
+<div class="search">
+  <input type="text" placeholder="Search" [(ngModel)]="query" id="listSearch" />
+  <div class="" *ngFor="let todo of testTodos | searchFilter: query">
+    <span>{{ todo.id }} | {{ todo.userId }}</span>
+    <span> | {{ todo.title }} | {{ todo.completed ? "yes" : "no" }}</span>
+  </div>
+</div>
