@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { shareReplay, map } from 'rxjs/operators';
 
 import Todo from 'src/app/models/todo.model';
-import ITodo from 'src/app/models/itodo';
+import ITodo from 'src/app/models/ITodo';
 import { TodosService } from 'src/app/services/todos.service';
 import { NotificationService } from './notification.service';
 
