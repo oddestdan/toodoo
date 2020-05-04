@@ -1,4 +1,4 @@
-<mat-list-item role="list-item">
+<mat-list-option role="option" (click)="filterBy(filter)" [selected]="selected">
   <mat-icon matListIcon fontSet="material-icons-outlined">{{ icon }}</mat-icon>
   <span>{{ title | titlecase }}</span>
-</mat-list-item>
+</mat-list-option>
