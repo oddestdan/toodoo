@@ -93,7 +93,7 @@ export class TodosStoreService {
       },
       // revert the changes if BE returns an error
       (error) => {
-        this.notifier.open(`Error: ${error.message}`);
+        this.notifier.alert(`Error: ${error.message}`);
         setTimeout(() => this.remove(optimisticTodo.id, false));
       }
     );
@@ -103,32 +103,54 @@ export class TodosStoreService {
     const todo = this.todos.find((t) => t.id === id);
     this.todos = this.todos.filter((t) => t.id !== id);
 
-    // TODO: Undo operation
-    // Timeout server remove by notifier duration
-    // And then reset using notifier's action
+    // Prompt user if undo is necessary
+    const mode = { undo: false };
+    const msDuration = 3000;
+    const revertCb = () => {
+      mode.undo = true;
+      this.todos = [...this.todos, todo];
+    };
+    this.notifier.undoAlert(mode, revertCb, `Removed Todo.`, msDuration);
 
-    if (serverRemove) {
-      this.todosService.remove(id).subscribe(
-        () => {},
-        (error) => {
-          this.notifier.open(`Error: ${error.message}`);
-          setTimeout(() => (this.todos = [...this.todos, todo]));
-        }
-      );
-    }
+    // If not undoing, send server request after alert duration
+    setTimeout(() => {
+      if (serverRemove && !mode.undo) {
+        this.todosService.remove(id).subscribe(
+          () => {},
+          (error) => {
+            this.notifier.alert(`Error: ${error.message}`);
+            setTimeout(revertCb);
+          }
+        );
+      }
+    }, msDuration);
   }
 
   edit(id: string, oldTodo: ITodo) {
     const todoIndex = this.todos.findIndex((t) => t.id === id);
     const editedTodo = this.todos[todoIndex];
 
-    this.todosService.edit(id, editedTodo).subscribe(
-      () => {},
-      (error) => {
-        this.notifier.open(`Error: ${error.message}`);
-        setTimeout(() => (this.todos[todoIndex] = oldTodo));
+    // Prompt user if undo is necessary
+    const mode = { undo: false };
+    const msDuration = 3000;
+    const revertCb = () => {
+      mode.undo = true;
+      this.todos[todoIndex] = oldTodo;
+    };
+    this.notifier.undoAlert(mode, revertCb, `Removed Todo.`, msDuration);
+
+    // If not undoing, send server request after alert duration
+    setTimeout(() => {
+      if (!mode.undo) {
+        this.todosService.edit(id, editedTodo).subscribe(
+          () => {},
+          (error) => {
+            this.notifier.alert(`Error: ${error.message}`);
+            setTimeout(revertCb);
+          }
+        );
       }
-    );
+    }, msDuration);
   }
 
   toggle(id: string, completed: boolean) {
@@ -138,7 +160,7 @@ export class TodosStoreService {
       this.todosService.toggle(id, completed).subscribe(
         () => {},
         (error) => {
-          this.notifier.open(`Error: ${error.message}`);
+          this.notifier.alert(`Error: ${error.message}`);
           setTimeout(() => (todo.completed = !todo.completed));
         }
       );

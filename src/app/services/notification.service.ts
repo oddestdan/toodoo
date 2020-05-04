@@ -7,9 +7,24 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class NotificationService {
   constructor(public snackBar: MatSnackBar, private zone: NgZone) {}
 
-  public open(message: string, duration = 20000, action = 'Got it'): void {
+  public alert(message: string, duration = 10000, action = 'Got it'): void {
     this.zone.run(() => {
       this.snackBar.open(message, action, { duration });
+    });
+  }
+
+  public undoAlert(
+    mode: { undo: boolean },
+    revertCallback: Function,
+    message: string,
+    duration = 3000,
+    action = 'Undo'
+  ): void {
+    this.zone.run(() => {
+      this.snackBar
+        .open(message, action, { duration })
+        .onAction()
+        .subscribe(() => revertCallback());
     });
   }
 }
