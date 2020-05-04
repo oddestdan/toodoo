@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import ITodo from 'src/app/models/itodo';
+import ITodo from 'src/app/models/ITodo';
 import { TodosStoreService } from 'src/app/services/todos-store.service';
 
 @Component({
