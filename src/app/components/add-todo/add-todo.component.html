@@ -1,0 +1,36 @@
+<form
+  (ngSubmit)="onSubmit()"
+  [formGroup]="addForm"
+  class="add-todo"
+  #formDir="ngForm"
+>
+  <mat-form-field>
+    <mat-label>Title</mat-label>
+    <input
+      matInput
+      type="text"
+      name="title"
+      formControlName="title"
+      placeholder="Todo Title..."
+      autocomplete="off"
+      #inputEl
+    />
+  </mat-form-field>
+
+  <mat-error *ngIf="addForm.invalid && addForm.touched">
+    <app-validator-message [field]="addForm.get('title')">
+    </app-validator-message>
+  </mat-error>
+
+  <div class="add-todo__button-container">
+    <button
+      mat-flat-button
+      color="primary"
+      class="add-todo__button"
+      type="submit"
+      [disabled]="addForm.invalid"
+    >
+      Add Todo
+    </button>
+  </div>
+</form>

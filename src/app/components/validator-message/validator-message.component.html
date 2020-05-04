@@ -1,0 +1,8 @@
+<ul
+  class="validator"
+  *ngIf="field.invalid && field.touched && validatorMessages?.length"
+>
+  <li *ngFor="let errorMessage of validatorMessages">
+    {{ errorMessage }}
+  </li>
+</ul>

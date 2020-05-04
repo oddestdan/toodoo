@@ -1,0 +1,11 @@
+.add-todo {
+  margin: 16px;
+  padding: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  &__button {
+    display: flex;
+  }
+}
