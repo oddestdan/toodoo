@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 
 import ITodo from 'src/app/models/itodo';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-todo-item',
@@ -21,6 +22,8 @@ export class TodoItemComponent {
   @Output() remove = new EventEmitter<string>();
 
   @ViewChild('inputEl') private inputEl: ElementRef;
+
+  constructor(private notificationService: NotificationService) {}
 
   oldTodo: ITodo; // backup Todo in case of server errors
   isEditing = false;
@@ -37,11 +40,17 @@ export class TodoItemComponent {
   }
 
   submitEdit(): void {
-    this.edit.emit(this.oldTodo);
     this.isEditing = false;
+    this.edit.emit(this.oldTodo);
+    this.alertNotify('Edited todo');
   }
 
   handleRemoveClick(): void {
     this.remove.emit(this.todo.id);
+    this.alertNotify('Removed todo');
+  }
+
+  alertNotify(message: string, duration = 2000): void {
+    this.notificationService.open(message, duration);
   }
 }

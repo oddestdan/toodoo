@@ -5,6 +5,7 @@ import { shareReplay, map } from 'rxjs/operators';
 import Todo from 'src/app/models/todo.model';
 import ITodo from 'src/app/models/itodo';
 import { TodosService } from 'src/app/services/todos.service';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,10 @@ export class TodosStoreService {
     this._todos.next(todos);
   }
 
-  constructor(private todosService: TodosService) {
+  constructor(
+    private todosService: TodosService,
+    private notifier: NotificationService
+  ) {
     this.fetchAll();
   }
 
@@ -57,8 +61,8 @@ export class TodosStoreService {
       },
       // revert the changes if BE returns an error
       (error) => {
-        console.error(error);
-        this.remove(optimisticTodo.id, false);
+        this.notifier.open(`Error: ${error.message}`);
+        setTimeout(() => this.remove(optimisticTodo.id, false));
       }
     );
   }
@@ -71,8 +75,8 @@ export class TodosStoreService {
       this.todosService.remove(id).subscribe(
         () => {},
         (error) => {
-          console.error(error);
-          this.todos = [...this.todos, todo];
+          this.notifier.open(`Error: ${error.message}`);
+          setTimeout(() => (this.todos = [...this.todos, todo]));
         }
       );
     }
@@ -85,8 +89,8 @@ export class TodosStoreService {
     this.todosService.edit(id, editedTodo).subscribe(
       () => {},
       (error) => {
-        console.error(error);
-        this.todos[todoIndex] = oldTodo;
+        this.notifier.open(`Error: ${error.message}`);
+        setTimeout(() => (this.todos[todoIndex] = oldTodo));
       }
     );
   }
@@ -98,8 +102,8 @@ export class TodosStoreService {
       this.todosService.toggle(id, completed).subscribe(
         () => {},
         (error) => {
-          console.error(error);
-          todo.completed = !todo.completed;
+          this.notifier.open(`Error: ${error.message}`);
+          setTimeout(() => (todo.completed = !todo.completed));
         }
       );
     }
