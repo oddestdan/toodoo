@@ -1,7 +1,4 @@
 <mat-sidenav-container class="sidenav-container">
-  <!-- TODO: refactor into <app-sidenav> and <app-toolbar> -->
-
-  <!-- <app-sidenav></app-sidenav> -->
   <mat-sidenav
     #drawer
     class="sidenav"
@@ -10,32 +7,11 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Filters</mat-toolbar>
-    <!-- TODO: decide on logic -->
-    <!-- https://material.angular.io/components/list/overview -->
-    <!-- TODO: refactor into separate component -->
-    <mat-nav-list role="list">
-      <mat-list-item role="listitem">
-        <mat-icon matListIcon>assignment_late</mat-icon>
-        <span>Today</span>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <mat-icon matListIcon>today</mat-icon>
-        <span>Upcoming</span>
-      </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item role="listitem">
-        <mat-icon matListIcon>highlight_off</mat-icon>
-        <span>To Do</span>
-      </mat-list-item>
-      <mat-list-item role="listitem">
-        <mat-icon matListIcon>check_circle</mat-icon>
-        <span>Completed</span>
-      </mat-list-item>
-    </mat-nav-list>
+    <mat-toolbar class="sidenav__toolbar">Filters</mat-toolbar>
+    <app-nav-list class="sidenav__list"></app-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content class="sidenav__content content">
-    <!-- <app-toolbar></app-toolbar> -->
     <mat-toolbar color="primary" class="content__toolbar">
       <button
         type="button"
@@ -46,11 +22,10 @@
       >
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>toodoo.</span>
+      <span class="content__title">toodoo.</span>
+      <!-- TODO: Read more about styling -->
       <!-- https://material.angular.io/components/autocomplete/overview -->
-      <div class="content__search">
-        <span>Search</span>
-      </div>
+      <!-- <app-search-filter class="content__search"></app-search-filter> -->
     </mat-toolbar>
 
     <app-add-todo></app-add-todo>
