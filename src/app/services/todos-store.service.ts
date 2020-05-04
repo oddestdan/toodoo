@@ -19,6 +19,9 @@ export class TodosStoreService {
   // https://stackoverflow.com/questions/36986548/when-to-use-asobservable-in-rxjs
   readonly todos$ = this._todos.asObservable();
 
+  public filter = '';
+  public searchQuery = '';
+
   get todos(): ITodo[] {
     return this._todos.getValue();
   }
@@ -37,6 +40,35 @@ export class TodosStoreService {
     this.todosService.getAll().subscribe((data) => {
       this.todos = data;
     });
+  }
+
+  getFilteredTodos(): Observable<ITodo[]> {
+    let filteredTodos$: Observable<ITodo[]>;
+
+    switch (this.filter) {
+      case 'COMPLETED':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) => todos.filter((todo) => todo.completed))
+        );
+        break;
+
+      case 'IN_PROGRESS':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) => todos.filter((todo) => !todo.completed))
+        );
+        break;
+
+      // TODO: When creating date-related functionality
+      // case 'TODAY':
+      // break;
+      // case 'UPCOMING':
+      // break;
+
+      default:
+        filteredTodos$ = this.todos$;
+        break;
+    }
+    return filteredTodos$;
   }
 
   // Optimistic CRUD actions on UI side:
@@ -70,6 +102,10 @@ export class TodosStoreService {
   remove(id: string, serverRemove = true) {
     const todo = this.todos.find((t) => t.id === id);
     this.todos = this.todos.filter((t) => t.id !== id);
+
+    // TODO: Undo operation
+    // Timeout server remove by notifier duration
+    // And then reset using notifier's action
 
     if (serverRemove) {
       this.todosService.remove(id).subscribe(

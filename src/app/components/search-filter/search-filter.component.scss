@@ -1,0 +1,11 @@
+.search {
+  width: 33vw;
+
+  &__field {
+    width: 100%;
+  }
+
+  @media (max-width: 540px) {
+    width: 50vw;
+  }
+}

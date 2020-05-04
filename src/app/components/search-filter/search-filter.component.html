@@ -1,0 +1,24 @@
+<div class="search">
+  <mat-form-field floatLabel="never" class="search__field">
+    <input
+      matInput
+      name="searchQuery"
+      autocomplete="off"
+      type="text"
+      placeholder="Search Todo..."
+      [(ngModel)]="query"
+      (keyup.escape)="reset()"
+      #inputEl
+    />
+    <button
+      mat-button
+      *ngIf="query"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="reset()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
