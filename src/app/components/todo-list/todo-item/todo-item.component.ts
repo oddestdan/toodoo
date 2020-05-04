@@ -7,7 +7,7 @@ import {
   ElementRef,
 } from '@angular/core';
 
-import ITodo from 'src/app/models/itodo';
+import ITodo from 'src/app/models/ITodo';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
