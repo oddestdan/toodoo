@@ -20,6 +20,7 @@ export class TodosStoreService {
   readonly todos$ = this._todos.asObservable();
 
   public filter = '';
+  public searchQuery = '';
 
   get todos(): ITodo[] {
     return this._todos.getValue();

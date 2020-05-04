@@ -1,6 +1,6 @@
 <ul class="todo-list">
   <app-todo-item
-    *ngFor="let todo of filteredTodos | async; trackBy: todosTrackFn"
+    *ngFor="let todo of filteredTodos | async | searchFilter: query"
     [todo]="todo"
     (toggle)="handleToggle(todo.id, $event)"
     (edit)="handleEdit(todo.id, $event)"

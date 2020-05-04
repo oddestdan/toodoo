@@ -11,10 +11,13 @@ import { Observable } from 'rxjs';
 })
 export class TodoListComponent {
   // optimization to rerender only todos that change
-  todosTrackFn = (i: string, todo: ITodo): string => todo.id;
+  // todosTrackFn = (i: string, todo: ITodo): string => todo.id;
 
   get filteredTodos(): Observable<ITodo[]> {
     return this.todosStore.getFilteredTodos();
+  }
+  get query(): string {
+    return this.todosStore.searchQuery;
   }
 
   constructor(public todosStore: TodosStoreService) {}

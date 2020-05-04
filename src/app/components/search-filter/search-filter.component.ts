@@ -1,67 +1,28 @@
-import { Component, OnInit } from '@angular/core';
-import ITodo from 'src/app/models/ITodo';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { TodosStoreService } from 'src/app/services/todos-store.service';
 
 @Component({
   selector: 'app-search-filter',
   templateUrl: './search-filter.component.html',
   styleUrls: ['./search-filter.component.scss'],
 })
-export class SearchFilterComponent implements OnInit {
-  query: '';
-  testTodos: ITodo[];
+export class SearchFilterComponent {
+  get query(): string {
+    return this.todosStore.searchQuery;
+  }
+  set query(value: string) {
+    this.todosStore.searchQuery = value;
+  }
+  @ViewChild('inputEl') private inputEl: ElementRef;
 
-  constructor() {}
+  constructor(private todosStore: TodosStoreService) {}
 
-  ngOnInit(): void {
-    this.testTodos = [
-      {
-        id: '6',
-        userId: 'userId 6',
-        title: 'qwertys',
-        completed: false,
-      },
-      {
-        id: '8',
-        userId: 'userId 8',
-        title: 'title 8',
-        completed: true,
-      },
-      {
-        id: '21',
-        userId: '0',
-        title: 'test',
-        completed: false,
-      },
-      {
-        id: '24',
-        userId: '0',
-        title: 'asdarqds 1asdasd',
-        completed: true,
-      },
-      {
-        id: '29',
-        userId: '0',
-        title: 'reda',
-        completed: false,
-      },
-      {
-        id: '31',
-        userId: '0',
-        title: 'asdasd',
-        completed: true,
-      },
-      {
-        id: '33',
-        userId: '0',
-        title: 'some',
-        completed: false,
-      },
-      {
-        id: '34',
-        userId: '0',
-        title: 'hambyrger',
-        completed: false,
-      },
-    ];
+  blurInput(): void {
+    setTimeout(() => this.inputEl.nativeElement.blur());
+  }
+
+  reset(): void {
+    this.query = '';
+    this.blurInput();
   }
 }

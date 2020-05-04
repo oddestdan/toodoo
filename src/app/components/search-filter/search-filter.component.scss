@@ -1,7 +1,11 @@
 .search {
-  // TODO: remove debugging stuff
-  position: fixed;
-  left: 50%;
-  top: 0;
-  color: red;
+  width: 33vw;
+
+  &__field {
+    width: 100%;
+  }
+
+  @media (max-width: 540px) {
+    width: 50vw;
+  }
 }

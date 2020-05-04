@@ -1,7 +1,24 @@
 <div class="search">
-  <input type="text" placeholder="Search" [(ngModel)]="query" id="listSearch" />
-  <div class="" *ngFor="let todo of testTodos | searchFilter: query">
-    <span>{{ todo.id }} | {{ todo.userId }}</span>
-    <span> | {{ todo.title }} | {{ todo.completed ? "yes" : "no" }}</span>
-  </div>
+  <mat-form-field floatLabel="never" class="search__field">
+    <input
+      matInput
+      name="searchQuery"
+      autocomplete="off"
+      type="text"
+      placeholder="Search Todo..."
+      [(ngModel)]="query"
+      (keyup.escape)="reset()"
+      #inputEl
+    />
+    <button
+      mat-button
+      *ngIf="query"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="reset()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
 </div>
