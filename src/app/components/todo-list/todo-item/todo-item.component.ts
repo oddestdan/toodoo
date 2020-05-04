@@ -42,15 +42,9 @@ export class TodoItemComponent {
   submitEdit(): void {
     this.isEditing = false;
     this.edit.emit(this.oldTodo);
-    this.alertNotify('Edited todo');
   }
 
   handleRemoveClick(): void {
     this.remove.emit(this.todo.id);
-    this.alertNotify('Removed todo');
-  }
-
-  alertNotify(message: string, duration = 2000): void {
-    this.notificationService.open(message, duration);
   }
 }
