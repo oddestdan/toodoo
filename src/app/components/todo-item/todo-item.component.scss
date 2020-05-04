@@ -1,0 +1,23 @@
+.todo-item {
+  display: flex;
+  align-items: center;
+
+  &__checkbox {
+    margin-right: 1rem;
+  }
+  &__content {
+    flex-grow: 1;
+  }
+  &__actions {
+    display: flex;
+  }
+
+  &__edit-container {
+    display: flex;
+  }
+  &__edit {
+    padding: 0 1rem;
+    // border-bottom: 1px solid;
+    background-color: #eee; // TODO: get color from mat theming
+  }
+}
