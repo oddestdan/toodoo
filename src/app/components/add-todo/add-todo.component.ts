@@ -26,9 +26,7 @@ export class AddTodoComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const title = this.addForm.get('title').value;
-    const deadline = this.addForm.get('deadline').value;
-    this.todosStore.add({ title, deadline });
+    this.todosStore.add(this.addForm.value); // { title, deadline }
 
     this.resetForm();
   }
