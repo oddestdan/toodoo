@@ -4,18 +4,40 @@
   class="add-todo"
   #formDir="ngForm"
 >
-  <mat-form-field>
-    <mat-label>Title</mat-label>
-    <input
-      matInput
-      type="text"
-      name="title"
-      formControlName="title"
-      placeholder="Todo Title..."
-      autocomplete="off"
-      #inputEl
-    />
-  </mat-form-field>
+  <div class="add-todo__input-container">
+    <mat-form-field class="add-todo__title-wrapper">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        type="text"
+        name="title"
+        formControlName="title"
+        placeholder="Todo Title..."
+        autocomplete="off"
+        #inputEl
+      />
+    </mat-form-field>
+    <!-- <app-date-picker [minDate]="minDate" formControlName="deadline">
+    </app-date-picker> -->
+    <mat-form-field>
+      <mat-label>Deadline Date</mat-label>
+      <input
+        matInput
+        class="add-todo__date"
+        [matDatepicker]="dp"
+        [min]="minDate"
+        formControlName="deadline"
+      />
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker
+        #dp
+        touchUi
+        startView="month"
+        [startAt]="minDate"
+        disabled="false"
+      ></mat-datepicker>
+    </mat-form-field>
+  </div>
 
   <mat-error *ngIf="addForm.invalid && addForm.touched">
     <app-validator-message [field]="addForm.get('title')">

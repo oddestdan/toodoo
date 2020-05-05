@@ -3,4 +3,6 @@ export default interface ITodo {
   userId: string;
   title: string;
   completed: boolean;
+  createdAt: Date;
+  deadlineAt: Date;
 }

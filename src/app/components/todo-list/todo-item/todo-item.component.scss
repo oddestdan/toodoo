@@ -8,8 +8,18 @@
   &__content {
     flex-grow: 1;
   }
+  &__title {
+    cursor: pointer;
+  }
+
   &__actions {
     display: flex;
+    align-items: center;
+  }
+  &__date {
+    margin-right: 1rem;
+    text-align: end;
+    white-space: nowrap;
   }
 
   &__edit-container {
@@ -17,7 +27,6 @@
   }
   &__edit {
     padding: 0 1rem;
-    // border-bottom: 1px solid;
     background-color: #eee; // TODO: get color from mat theming
   }
 }
