@@ -101,6 +101,7 @@ export class TodosStoreService {
 
   remove(id: string, serverRemove = true) {
     const todo = this.todos.find((t) => t.id === id);
+    const todoIndex = this.todos.findIndex((t) => t.id === id);
     this.todos = this.todos.filter((t) => t.id !== id);
 
     // Prompt user if undo is necessary
@@ -108,9 +109,9 @@ export class TodosStoreService {
     const msDuration = 3000;
     const revertCb = () => {
       mode.undo = true;
-      this.todos = [...this.todos, todo];
+      this.todos.splice(todoIndex, 0, todo); // insert removed todo back
     };
-    this.notifier.undoAlert(mode, revertCb, `Removed Todo.`, msDuration);
+    this.notifier.undoAlert(mode, revertCb, 'Removed Todo.', msDuration);
 
     // If not undoing, send server request after alert duration
     setTimeout(() => {
@@ -137,7 +138,7 @@ export class TodosStoreService {
       mode.undo = true;
       this.todos[todoIndex] = oldTodo;
     };
-    this.notifier.undoAlert(mode, revertCb, `Edited Todo.`, msDuration);
+    this.notifier.undoAlert(mode, revertCb, 'Edited Todo.', msDuration);
 
     // If not undoing, send server request after alert duration
     setTimeout(() => {
