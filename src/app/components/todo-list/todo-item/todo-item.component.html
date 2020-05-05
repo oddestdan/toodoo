@@ -8,7 +8,7 @@
   ></mat-checkbox>
 
   <div class="todo-item__content">
-    <span *ngIf="!isEditing" (dblclick)="handleEdit()">
+    <span *ngIf="!isEditing" (dblclick)="handleEdit()" class="todo-item__title">
       {{ todo.title }}
     </span>
     <div *ngIf="isEditing" class="todo-item__edit-container">
@@ -32,6 +32,9 @@
   </div>
 
   <div class="todo-item__actions" *ngIf="!isEditing">
+    <span class="todo-item__date">
+      {{ todo.deadlineAt | date: "mediumDate" }}
+    </span>
     <button
       mat-icon-button
       (click)="handleEdit()"
