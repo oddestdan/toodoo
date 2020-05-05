@@ -36,7 +36,7 @@ export class TodosStoreService {
     this.fetchAll();
   }
 
-  fetchAll() {
+  fetchAll(): void {
     this.todosService.getAll().subscribe((data) => {
       this.todos = data;
     });
@@ -44,6 +44,7 @@ export class TodosStoreService {
 
   getFilteredTodos(): Observable<ITodo[]> {
     let filteredTodos$: Observable<ITodo[]>;
+    const currentDate = new Date();
 
     switch (this.filter) {
       case 'COMPLETED':
@@ -58,11 +59,21 @@ export class TodosStoreService {
         );
         break;
 
-      // TODO: When creating date-related functionality
-      // case 'TODAY':
-      // break;
-      // case 'UPCOMING':
-      // break;
+      case 'OVERDUE':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) =>
+            todos.filter((todo) => new Date(todo.deadlineAt) <= currentDate)
+          )
+        );
+        break;
+
+      case 'UPCOMING':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) =>
+            todos.filter((todo) => new Date(todo.deadlineAt) > currentDate)
+          )
+        );
+        break;
 
       default:
         filteredTodos$ = this.todos$;
@@ -76,9 +87,9 @@ export class TodosStoreService {
   // immediately see the result, while server processes the query.
   // - And if server's response has an error, we reroll UI state back
 
-  add(title: string) {
+  add({ title, deadline }: { title: string; deadline: Date }): void {
     // optimistically update UI-side state
-    const optimisticTodo = new Todo(title);
+    const optimisticTodo = new Todo(title, deadline);
     this.todos = [...this.todos, optimisticTodo];
 
     // send request to the server
@@ -99,7 +110,7 @@ export class TodosStoreService {
     );
   }
 
-  remove(id: string, serverRemove = true) {
+  remove(id: string, serverRemove = true): void {
     const todo = this.todos.find((t) => t.id === id);
     const todoIndex = this.todos.findIndex((t) => t.id === id);
     this.todos = this.todos.filter((t) => t.id !== id);
@@ -127,7 +138,7 @@ export class TodosStoreService {
     }, msDuration);
   }
 
-  edit(id: string, oldTodo: ITodo) {
+  edit(id: string, oldTodo: ITodo): void {
     const todoIndex = this.todos.findIndex((t) => t.id === id);
     const editedTodo = this.todos[todoIndex];
 
@@ -154,7 +165,7 @@ export class TodosStoreService {
     }, msDuration);
   }
 
-  toggle(id: string, completed: boolean) {
+  toggle(id: string, completed: boolean): void {
     const todo = this.todos.find((t) => t.id === id);
 
     if (todo) {

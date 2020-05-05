@@ -8,4 +8,21 @@
   &__button {
     display: flex;
   }
+
+  &__input-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &__title-wrapper {
+    flex-grow: 1;
+    margin-right: 32px;
+  }
+
+  &__date {
+    &:disabled {
+      color: inherit;
+    }
+  }
 }

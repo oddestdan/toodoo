@@ -17,6 +17,7 @@ import { SearchFilterPipe } from './pipes/search-filter.pipe';
 import { SearchFilterComponent } from './components/search-filter/search-filter.component';
 import { NavListComponent } from './components/nav-list/nav-list.component';
 import { NavListItemComponent } from './components/nav-list/nav-list-item/nav-list-item.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,6 +29,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SearchFilterComponent,
     NavListItemComponent,
     NavListComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,8 +63,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatSidenavModule,
     MatListModule,
     MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

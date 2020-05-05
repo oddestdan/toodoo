@@ -1,0 +1,7 @@
+.date-picker {
+  &__input {
+    &:disabled {
+      color: inherit;
+    }
+  }
+}
