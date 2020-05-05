@@ -44,6 +44,7 @@ export class TodosStoreService {
 
   getFilteredTodos(): Observable<ITodo[]> {
     let filteredTodos$: Observable<ITodo[]>;
+    const currentDate = new Date();
 
     switch (this.filter) {
       case 'COMPLETED':
@@ -58,11 +59,21 @@ export class TodosStoreService {
         );
         break;
 
-      // TODO: When creating date-related functionality
-      // case 'TODAY':
-      // break;
-      // case 'UPCOMING':
-      // break;
+      case 'OVERDUE':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) =>
+            todos.filter((todo) => new Date(todo.deadlineAt) <= currentDate)
+          )
+        );
+        break;
+
+      case 'UPCOMING':
+        filteredTodos$ = this.todos$.pipe(
+          map((todos) =>
+            todos.filter((todo) => new Date(todo.deadlineAt) > currentDate)
+          )
+        );
+        break;
 
       default:
         filteredTodos$ = this.todos$;
