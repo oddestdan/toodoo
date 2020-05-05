@@ -137,7 +137,7 @@ export class TodosStoreService {
       mode.undo = true;
       this.todos[todoIndex] = oldTodo;
     };
-    this.notifier.undoAlert(mode, revertCb, `Removed Todo.`, msDuration);
+    this.notifier.undoAlert(mode, revertCb, `Edited Todo.`, msDuration);
 
     // If not undoing, send server request after alert duration
     setTimeout(() => {
